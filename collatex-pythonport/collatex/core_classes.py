@@ -320,11 +320,11 @@ def join(graph):
         vertex = queue.popleft()
         out_edges = graph.out_edges(vertex)
         if len(out_edges) is 1:
-            (_, join_candidate) = out_edges[0]
+            (_, join_candidate) = list(out_edges)[0]
             can_join = join_candidate != end and len(graph.in_edges(join_candidate)) == 1
             if can_join:
                 join_vertex_and_join_candidate(graph, join_candidate, vertex)
-                for (_, neighbor, data) in graph.out_edges(join_candidate, data=True):
+                for (_, neighbor, data) in list(graph.out_edges(join_candidate, data=True)):
                     graph.remove_edge(join_candidate, neighbor)
                     graph.connect(vertex, neighbor, data["label"])
                 graph.remove_edge(vertex, join_candidate)
